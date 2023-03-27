@@ -1,0 +1,124 @@
+import { NextApiRequest, NextApiResponse } from "next";
+import { WebClient } from "@slack/web-api";
+import { Configuration, OpenAIApi } from "openai";
+import axios from "axios";
+import fetch from "node-fetch";
+import { requestChatGPT } from "./chatGenerate";
+
+const token = process.env.BOT_TOKEN;
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> {
+  try {
+    // const signingSecret = process.env.SIGNING_SECRET;
+    const type = req.body.type;
+    if (type === "url_verification") {
+      res.send(req.body.challenge);
+    } else {
+      const event_type = req.body.event.type;
+
+      // const chatAnswer = await requestChatGPT();
+      const parrot = req.body.event.text;
+
+      // await axios({
+      //   url: callSlackBotApiUrl,
+      //   method: "GET",
+      //   // data: { userInput, answerType },
+      //   // onDownloadProgress: (progressEvent: any) => {
+      //   //   const dataChunk = progressEvent.event.target.response;
+      //   //   setChatGPTAnswer(dataChunk);
+      //   // },
+      // }).catch(() => {});
+
+      switch (event_type) {
+        case "app_mention":
+          console.log("mention received");
+          postMessage();
+          const message = {
+            channel: "general",
+            // text: chatAnswer,
+            text: parrot,
+          };
+
+          const url = "https://slack.com/api/chat.postMessage";
+          const response = await fetch(url, {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(message),
+          });
+          // res.json({ ok: true });
+          res.status(200).send("OK");
+
+          break;
+        default:
+          break;
+      }
+    }
+  } catch (error) {
+    // postMessage();
+    // console.log("process start", new Date());
+    // const chatAnswer = await requestChatGPT();
+    const callChatGPTApiUrl = "/api/talkRoom";
+    console.log("calling");
+    axios({
+      url: callChatGPTApiUrl,
+      method: "POST",
+      data: { userInput: "こんにちは！", type: "genki" },
+      onDownloadProgress: (progressEvent: any) => {
+        console.log("Progre?");
+        const dataChunk = progressEvent.event.target.response;
+        console.log(dataChunk);
+        // setChatGPTAnswer(dataChunk);
+      },
+    }).catch(() => {});
+
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.status(200).send("OK");
+  }
+}
+
+async function postMessage(): Promise<void> {
+  console.log("post call");
+  const channel = "general";
+  const client = new WebClient(token);
+  // const response = await client.chat.postMessage({ channel, chatAnswer });
+  getChatGPT().then((val) => {
+    console.log("mention received and", val);
+    client.chat.postMessage({ channel, text: val });
+  });
+}
+
+async function getChatGPT(): Promise<string> {
+  const apiKey = process.env.CHAT_GPT_KEY;
+  if (!apiKey) {
+    throw new Error("API key not found");
+  }
+
+  const configuration = new Configuration({
+    apiKey: apiKey,
+  });
+
+  try {
+    const openai = new OpenAIApi(configuration);
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: "ChatGPT について教えて" }],
+    });
+
+    const chat = completion.data.choices[0].message?.content;
+    if (!chat) {
+      return "no data res";
+    } else {
+      console.log("process End", new Date());
+      return chat;
+    }
+  } catch (err) {
+    console.error(err);
+    return " occured";
+  }
+}
