@@ -20,11 +20,9 @@ const TalkRoomComponent: React.FC = () => {
   const handleFocus = () => {
     if (inputRef.current && inputRef.current.value === "") {
       inputRef.current.value = textInput;
-      console.log("こっちか？");
     } else if (inputRef.current) {
       inputRef.current.value = "";
       setTextInput(inputRef.current.value);
-      console.log("こっち？");
     }
   };
 

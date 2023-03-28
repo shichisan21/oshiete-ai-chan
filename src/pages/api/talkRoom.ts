@@ -27,6 +27,10 @@ export default async function handler(
       definitionText = `元気な幼馴染の女の子のアニメキャラクターのように返答して`;
       break;
 
+    case "tereya":
+      definitionText = `引っ込み思案な女の子のアニメキャラクターのように返答して`;
+      break;
+
     default:
       break;
   }

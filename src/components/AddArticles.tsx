@@ -76,6 +76,34 @@ export const AddArticles: React.FC<Props> = ({
         >
           元気な幼馴染に聞いてみる？
         </Button>
+        <Button
+          size='medium'
+          variant='outlined'
+          type='button'
+          disabled={isChatGPTAnserButtonDisabled}
+          onClick={async () => {
+            setIsChatGPTAnserButtonDisabled(true);
+            setChatGPTAnswer("(返事を考えているようです...)");
+            const userInput = textInput === "" ? "おはよう！" : textInput;
+            const answerType = "tereya";
+            await axios({
+              url: callChatGPTApiUrl,
+              method: "POST",
+              data: { userInput, answerType },
+              onDownloadProgress: async (progressEvent: any) => {
+                const dataChunk = progressEvent.event.target.response;
+                setChatGPTAnswer(dataChunk);
+              },
+            }).catch((err) => {
+              setChatGPTAnswer("(今は返事をしたくないようです...)");
+              console.log(err);
+              setIsChatGPTAnserButtonDisabled(false);
+            });
+            setIsChatGPTAnserButtonDisabled(false);
+          }}
+        >
+          照れ屋な女の子に聞いてみる？
+        </Button>
       </Stack>
     </div>
   );
