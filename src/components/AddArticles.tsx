@@ -46,7 +46,7 @@ export const AddArticles: React.FC<Props> = ({
             setIsChatGPTAnserButtonDisabled(false);
           }}
         >
-          物静かな女性に聞いてみる?
+          物静かな女性に聞く?
         </Button>
         <Button
           size='medium'
@@ -74,7 +74,7 @@ export const AddArticles: React.FC<Props> = ({
             setIsChatGPTAnserButtonDisabled(false);
           }}
         >
-          元気な幼馴染に聞いてみる？
+          元気な幼馴染に聞く？
         </Button>
         <Button
           size='medium'
@@ -102,7 +102,7 @@ export const AddArticles: React.FC<Props> = ({
             setIsChatGPTAnserButtonDisabled(false);
           }}
         >
-          照れ屋な女の子に聞いてみる？
+          照れ屋な女の子に聞く？
         </Button>
       </Stack>
     </div>
