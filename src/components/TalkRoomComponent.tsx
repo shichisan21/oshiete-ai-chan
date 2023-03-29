@@ -1,21 +1,30 @@
 import React, { useState, useRef } from "react";
-import { onInputEvent } from "./ButtonComponent";
 import { AddArticles } from "./AddArticles";
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 import { Noto_Sans_JP } from "next/font/google";
+
+/**Constant
+ *
+ */
+// Google Fonts設定用
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
   weight: "400",
 });
 
+/** Program
+ *
+ */
+
 const TalkRoomComponent: React.FC = () => {
+  const inputRef = useRef<HTMLInputElement>();
+
   const [textInput, setTextInput] = useState("");
   const [chatGPTAnswer, setChatGPTAnswer] =
     useState("ここに返事が表示されます。");
-  const inputRef = useRef<HTMLInputElement>();
 
   const handleFocus = () => {
     if (inputRef.current && inputRef.current.value === "") {
@@ -30,6 +39,12 @@ const TalkRoomComponent: React.FC = () => {
     if (inputRef.current && inputRef.current.value === "") {
       inputRef.current.value = textInput;
     }
+  };
+
+  const onInputEvent = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
+    setTextInput(event.target.value);
   };
 
   return (
@@ -53,7 +68,7 @@ const TalkRoomComponent: React.FC = () => {
           onBlur={handleBlur}
           value={textInput}
           onChange={(event) => {
-            onInputEvent(setTextInput, event);
+            onInputEvent(event);
           }}
         />
       </Box>

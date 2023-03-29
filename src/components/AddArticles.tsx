@@ -1,10 +1,8 @@
 import * as React from "react";
+import { getChatGPTAnswer } from "@/utils/getChatGPTAnswer";
+
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-
-import axios from "axios";
-
-const callChatGPTApiUrl = "/api/talkRoom";
 
 interface Props {
   textInput: string;
@@ -27,27 +25,21 @@ export const AddArticles: React.FC<Props> = ({
           disabled={isChatGPTAnserButtonDisabled}
           onClick={async () => {
             setIsChatGPTAnserButtonDisabled(true);
-            setChatGPTAnswer("(返事を考えているようです...)");
-            const userInput = textInput === "" ? "ごきげんよう" : textInput;
+
             const answerType = "shizuka";
-            await axios({
-              url: callChatGPTApiUrl,
-              method: "POST",
-              data: { userInput, answerType },
-              onDownloadProgress: async (progressEvent: any) => {
-                const dataChunk = progressEvent.event.target.response;
-                setChatGPTAnswer(dataChunk);
-              },
-            }).catch((err) => {
-              setChatGPTAnswer("(今は返事をしたくないようです...)");
-              console.log(err);
-              setIsChatGPTAnserButtonDisabled(false);
-            });
+            const defaultText = "ごきげんよう";
+            getChatGPTAnswer(
+              setChatGPTAnswer,
+              textInput,
+              answerType,
+              defaultText
+            );
             setIsChatGPTAnserButtonDisabled(false);
           }}
         >
           物静かな女性に聞く?
         </Button>
+
         <Button
           size='medium'
           variant='outlined'
@@ -55,27 +47,21 @@ export const AddArticles: React.FC<Props> = ({
           disabled={isChatGPTAnserButtonDisabled}
           onClick={async () => {
             setIsChatGPTAnserButtonDisabled(true);
-            setChatGPTAnswer("(返事を考えているようです...)");
-            const userInput = textInput === "" ? "おはよう！" : textInput;
+
             const answerType = "genki";
-            await axios({
-              url: callChatGPTApiUrl,
-              method: "POST",
-              data: { userInput, answerType },
-              onDownloadProgress: async (progressEvent: any) => {
-                const dataChunk = progressEvent.event.target.response;
-                setChatGPTAnswer(dataChunk);
-              },
-            }).catch((err) => {
-              setChatGPTAnswer("(今は返事をしたくないようです...)");
-              console.log(err);
-              setIsChatGPTAnserButtonDisabled(false);
-            });
+            const defaultText = "おはよう！";
+            getChatGPTAnswer(
+              setChatGPTAnswer,
+              textInput,
+              answerType,
+              defaultText
+            );
             setIsChatGPTAnserButtonDisabled(false);
           }}
         >
           元気な幼馴染に聞く？
         </Button>
+
         <Button
           size='medium'
           variant='outlined'
@@ -83,22 +69,15 @@ export const AddArticles: React.FC<Props> = ({
           disabled={isChatGPTAnserButtonDisabled}
           onClick={async () => {
             setIsChatGPTAnserButtonDisabled(true);
-            setChatGPTAnswer("(返事を考えているようです...)");
-            const userInput = textInput === "" ? "おはよう！" : textInput;
+
             const answerType = "tereya";
-            await axios({
-              url: callChatGPTApiUrl,
-              method: "POST",
-              data: { userInput, answerType },
-              onDownloadProgress: async (progressEvent: any) => {
-                const dataChunk = progressEvent.event.target.response;
-                setChatGPTAnswer(dataChunk);
-              },
-            }).catch((err) => {
-              setChatGPTAnswer("(今は返事をしたくないようです...)");
-              console.log(err);
-              setIsChatGPTAnserButtonDisabled(false);
-            });
+            const defaultText = "おはよう！";
+            getChatGPTAnswer(
+              setChatGPTAnswer,
+              textInput,
+              answerType,
+              defaultText
+            );
             setIsChatGPTAnserButtonDisabled(false);
           }}
         >
