@@ -9,11 +9,11 @@ interface Props {
   setChatGPTAnswer: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const AddArticles: React.FC<Props> = ({
+export const ChatbotAnswerSection: React.FC<Props> = ({
   textInput,
   setChatGPTAnswer,
 }) => {
-  const [isChatGPTAnserButtonDisabled, setIsChatGPTAnserButtonDisabled] =
+  const [isChatGPTAnserButtonDisabled, setIsChatGPTAnswerButtonDisabled] =
     React.useState(false);
   return (
     <div>
@@ -24,17 +24,15 @@ export const AddArticles: React.FC<Props> = ({
           type='button'
           disabled={isChatGPTAnserButtonDisabled}
           onClick={async () => {
-            setIsChatGPTAnserButtonDisabled(true);
-
             const answerType = "shizuka";
             const defaultText = "ごきげんよう";
             getChatGPTAnswer(
+              setIsChatGPTAnswerButtonDisabled,
               setChatGPTAnswer,
               textInput,
               answerType,
               defaultText
             );
-            setIsChatGPTAnserButtonDisabled(false);
           }}
         >
           物静かな女性に聞く?
@@ -46,17 +44,15 @@ export const AddArticles: React.FC<Props> = ({
           type='button'
           disabled={isChatGPTAnserButtonDisabled}
           onClick={async () => {
-            setIsChatGPTAnserButtonDisabled(true);
-
             const answerType = "genki";
             const defaultText = "おはよう！";
             getChatGPTAnswer(
+              setIsChatGPTAnswerButtonDisabled,
               setChatGPTAnswer,
               textInput,
               answerType,
               defaultText
             );
-            setIsChatGPTAnserButtonDisabled(false);
           }}
         >
           元気な幼馴染に聞く？
@@ -68,17 +64,15 @@ export const AddArticles: React.FC<Props> = ({
           type='button'
           disabled={isChatGPTAnserButtonDisabled}
           onClick={async () => {
-            setIsChatGPTAnserButtonDisabled(true);
-
             const answerType = "tereya";
             const defaultText = "おはよう！";
             getChatGPTAnswer(
+              setIsChatGPTAnswerButtonDisabled,
               setChatGPTAnswer,
               textInput,
               answerType,
               defaultText
             );
-            setIsChatGPTAnserButtonDisabled(false);
           }}
         >
           照れ屋な女の子に聞く？

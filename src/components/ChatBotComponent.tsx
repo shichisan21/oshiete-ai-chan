@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { AddArticles } from "./AddArticles";
+import { ChatbotAnswerSection } from "./ChatbotAnswerSection";
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -19,7 +19,7 @@ const notoSansJP = Noto_Sans_JP({
  *
  */
 
-const TalkRoomComponent: React.FC = () => {
+const ChatBotComponent: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>();
 
   const [textInput, setTextInput] = useState("");
@@ -72,10 +72,13 @@ const TalkRoomComponent: React.FC = () => {
           }}
         />
       </Box>
-      <AddArticles textInput={textInput} setChatGPTAnswer={setChatGPTAnswer} />
+      <ChatbotAnswerSection
+        textInput={textInput}
+        setChatGPTAnswer={setChatGPTAnswer}
+      />
       <p>{chatGPTAnswer}</p>
     </>
   );
 };
 
-export default TalkRoomComponent;
+export default ChatBotComponent;
