@@ -4,6 +4,9 @@ import { ChatbotAnswerSection } from "./ChatbotAnswerSection";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 import { Noto_Sans_JP } from "next/font/google";
 
 /**Constant
@@ -72,10 +75,12 @@ const ChatBotComponent: React.FC = () => {
           }}
         />
       </Box>
-      <ChatbotAnswerSection
-        textInput={textInput}
-        setChatGPTAnswer={setChatGPTAnswer}
-      />
+      <DndProvider backend={HTML5Backend}>
+        <ChatbotAnswerSection
+          textInput={textInput}
+          setChatGPTAnswer={setChatGPTAnswer}
+        />
+      </DndProvider>
       <p>{chatGPTAnswer}</p>
     </>
   );
