@@ -23,7 +23,7 @@ const buttonItem = {
 type ButtonItem = typeof buttonItem;
 
 const buttonSource: DragSourceHookSpec<
-  ButtonType,
+  ButtonItem,
   unknown,
   { isDragging: boolean }
 > = {
