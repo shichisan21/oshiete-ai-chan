@@ -4,7 +4,7 @@ import { getChatGPTAnswer } from "@/utils/getChatGPTAnswer";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-import { useDrag, useDrop } from "react-dnd";
+import { DragSourceHookSpec, useDrag, useDrop } from "react-dnd";
 
 interface Props {
   textInput: string;
@@ -15,6 +15,33 @@ export const DnDItems = {
   Todo: "Todo",
 } as const;
 export type DnDItems = typeof DnDItems[keyof typeof DnDItems];
+
+const buttonItem = {
+  type: DnDItems.Todo,
+} as const;
+
+type ButtonItem = typeof buttonItem;
+
+const buttonSource: DragSourceHookSpec<
+  ButtonType,
+  unknown,
+  { isDragging: boolean }
+> = {
+  item: buttonItem,
+  collect: (monitor) => ({
+    isDragging: monitor.isDragging(),
+  }),
+};
+
+const [{ isOver }, drop] = useDrop(() => ({
+  accept: DnDItems.Todo,
+  drop: () => ({
+    name: "ChatbotAnswerSection",
+  }),
+  collect: (monitor) => ({
+    isOver: monitor.isOver(),
+  }),
+}));
 
 export const ChatbotAnswerSection: React.FC<Props> = ({
   textInput,
@@ -27,6 +54,8 @@ export const ChatbotAnswerSection: React.FC<Props> = ({
     <div>
       <Stack spacing={2} direction='column'>
         <Button
+          ref={drop}
+          id='button_01'
           draggable='true'
           size='medium'
           variant='outlined'
