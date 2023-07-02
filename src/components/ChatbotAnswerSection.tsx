@@ -3,43 +3,12 @@ import { getChatGPTAnswer } from "@/utils/getChatGPTAnswer";
 
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-
-import { DragSourceHookSpec, useDrag, useDrop } from "react-dnd";
-import { DragObjectWithType } from "react-dnd";
+import { Box } from "@mui/material";
 
 interface Props {
   textInput: string;
   setChatGPTAnswer: React.Dispatch<React.SetStateAction<string>>;
 }
-
-const [{ canDrop, isOver }, drop] = useDrop({
-  accept: "BUTTON",
-  drop: (item: DragObjectWithType, monitor: DropTargetMonitor) => {
-    const didDrop = monitor.didDrop();
-    if (didDrop) {
-      return;
-    }
-    // ...
-  },
-  collect: (monitor) => ({
-    isOver: monitor.isOver(),
-    canDrop: monitor.canDrop(),
-  }),
-});
-
-const buttonsource: DragSourceHookSpec<string, any, any> = {
-  beginDrag: (props) => {
-    return { id: props.id };
-  },
-};
-
-const drop = (item: any, monitor: any) => {
-  const didDrop = monitor.didDrop();
-  if (didDrop) {
-    return;
-  }
-  return { name: "ChatbotAnswerSection" };
-};
 
 export const ChatbotAnswerSection: React.FC<Props> = ({
   textInput,
@@ -49,11 +18,10 @@ export const ChatbotAnswerSection: React.FC<Props> = ({
     React.useState(false);
 
   return (
-    <div>
+    <Box>
       <Stack spacing={2} direction='column'>
-        <div ref={drop} style={{ opacity: buttonsource.isDragging ? 0.5 : 1 }}>
+        <Box>
           <Button
-            {...buttonsource}
             id='button_01'
             draggable='true'
             size='medium'
@@ -118,8 +86,8 @@ export const ChatbotAnswerSection: React.FC<Props> = ({
           >
             照れ屋な女の子に聞く？
           </Button>
-        </div>
+        </Box>
       </Stack>
-    </div>
+    </Box>
   );
 };
