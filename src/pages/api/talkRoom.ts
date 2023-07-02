@@ -36,7 +36,7 @@ export default async function handler(
   }
 
   const payload = {
-    model: "gpt-4",
+    model: "gpt-3.5-turbo",
     messages: [
       { role: "assistant", content: definitionText },
       { role: "user", content: userInput },

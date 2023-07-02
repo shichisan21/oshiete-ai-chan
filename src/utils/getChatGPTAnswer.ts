@@ -21,7 +21,7 @@ export async function getChatGPTAnswer(
     url: callChatGPTApiUrl,
     method: "POST",
     data: { userInput, answerType },
-    timeout: 20000, // 10秒でタイムアウト
+    timeout: 20000, // 20秒でタイムアウト
     onDownloadProgress: async (progressEvent: any) => {
       const dataChunk = progressEvent.event.target.response;
       setChatGPTAnswer(dataChunk);
